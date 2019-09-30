@@ -3,14 +3,14 @@ var router = express.Router();
 var User = require('../../../models').User;
 
 /* Post new user */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
   User.create({
           email: req.body.email,
           password: req.body.password
     })
-    .then(game => {
+    .then(user => {
       res.setHeader("Content-Type", "application/json");
-      res.status(201).send(JSON.stringify(game));
+      res.status(201).send(JSON.stringify(user));
     })
     .catch(error => {
       res.setHeader("Content-Type", "application/json");

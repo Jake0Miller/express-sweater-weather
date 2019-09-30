@@ -4,9 +4,13 @@
 
 Update postgres username in /config/config.json
 
-npx sequelize db:create
+$ npx sequelize db:create
 
-npx sequelize db:migrate
+$ npx sequelize db:migrate
+
+# Running Tests
+
+$ npm test
 
 # Core Contributors
 

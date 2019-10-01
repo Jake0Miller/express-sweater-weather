@@ -16,6 +16,13 @@ router.post('/', function(req, res, next) {
         message: 'Email cannot be empty.'
       }
       res.status(400).send(JSON.stringify(payload));
+    } else if (req.body.password == '') {
+      payload = {
+        error: 'PasswordCannotBeEmpty',
+        status: 400,
+        message: 'Password cannot be empty.'
+      }
+      res.status(400).send(JSON.stringify(payload));
     }
 
     User.create({

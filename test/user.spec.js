@@ -55,6 +55,28 @@ describe('api', () => {
           expect(response.body.message).toBe('Email cannot be empty.')
       })
     });
+
+    test('should not work without password', () => {
+      var service = {
+        email: 'jake@gmail.com',
+        password: '',
+        password_confirmation: 'frogs'
+      };
+
+      return request(app)
+        .post('/api/v1/users')
+        .send(service)
+        .then(response => {
+          expect(response.status).toBe(400)
+          expect(Object.keys(response.body).length).toBe(3)
+          expect(Object.keys(response.body)).toContain('error')
+          expect(Object.keys(response.body)).toContain('status')
+          expect(Object.keys(response.body)).toContain('message')
+          expect(response.body.error).toBe('PasswordCannotBeEmpty')
+          expect(response.body.status).toBe(400)
+          expect(response.body.message).toBe('Password cannot be empty.')
+      })
+    });
   });
 
 });

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 var User = require('../../../models').User;
+var srs = require('secure-random-string');
 
 /* Post new user */
 router.post('/', function(req, res, next) {
@@ -9,7 +10,7 @@ router.post('/', function(req, res, next) {
     User.create({
       email: req.body.email,
       password: hash,
-      api_key: 0
+      api_key: srs()
     })
     .then(user => {
       res.setHeader("Content-Type", "application/json");

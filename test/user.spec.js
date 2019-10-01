@@ -16,14 +16,31 @@ describe('api', () => {
   // });
 
   describe('Test POST /api/v1/users path', () => {
-    var service = {
-      title: "Mario",
-      price: 500,
-      releaseYear: 1985,
-      active: true
-    };
-
     test('should return an api key', () => {
+      var service = {
+        email: "jake@gmail.com",
+        password: 'frogs',
+        password_confirmation: 'frogs'
+      };
+
+      return request(app)
+        .post("/api/v1/users")
+        .send(service)
+        .then(response => {
+          expect(response.status).toBe(201)
+          expect(Object.keys(response.body).length).toBe(1)
+          expect(Object.keys(response.body)).toContain('api_key')
+          expect(response.body.api_key.length).toBe(32)
+      })
+    });
+
+    test('should not work ', () => {
+      var service = {
+        email: "jake@gmail.com",
+        password: 'frogs',
+        password_confirmation: 'frogs'
+      };
+
       return request(app)
         .post("/api/v1/users")
         .send(service)
@@ -35,7 +52,5 @@ describe('api', () => {
       })
     });
   });
-
-
 
 });

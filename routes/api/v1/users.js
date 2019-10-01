@@ -30,6 +30,13 @@ router.post('/', function(req, res, next) {
         message: 'Password confirmation cannot be empty.'
       }
       res.status(400).send(JSON.stringify(payload));
+    } else if (req.body.passwordConfirmation != req.body.password) {
+      payload = {
+        error: 'PasswordsMustMatch',
+        status: 400,
+        message: 'Password and confirmation must match.'
+      }
+      res.status(400).send(JSON.stringify(payload));
     }
 
     User.create({

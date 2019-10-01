@@ -99,6 +99,28 @@ describe('api', () => {
           expect(response.body.message).toBe('Password confirmation cannot be empty.')
       })
     });
+
+    test('passwords must match', () => {
+      var service = {
+        email: 'jake@gmail.com',
+        password: 'frogs',
+        passwordConfirmation: 'frog'
+      };
+
+      return request(app)
+        .post('/api/v1/users')
+        .send(service)
+        .then(response => {
+          expect(response.status).toBe(400)
+          expect(Object.keys(response.body).length).toBe(3)
+          expect(Object.keys(response.body)).toContain('error')
+          expect(Object.keys(response.body)).toContain('status')
+          expect(Object.keys(response.body)).toContain('message')
+          expect(response.body.error).toBe('PasswordsMustMatch')
+          expect(response.body.status).toBe(400)
+          expect(response.body.message).toBe('Password and confirmation must match.')
+      })
+    });
   });
 
 });

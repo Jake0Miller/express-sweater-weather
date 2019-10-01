@@ -18,13 +18,13 @@ describe('api', () => {
   describe('Test POST /api/v1/users path', () => {
     test('should return an api key', () => {
       var service = {
-        email: "jake@gmail.com",
+        email: 'jake@gmail.com',
         password: 'frogs',
         password_confirmation: 'frogs'
       };
 
       return request(app)
-        .post("/api/v1/users")
+        .post('/api/v1/users')
         .send(service)
         .then(response => {
           expect(response.status).toBe(201)
@@ -34,21 +34,25 @@ describe('api', () => {
       })
     });
 
-    test('should not work ', () => {
+    test('should not work without email', () => {
       var service = {
-        email: "jake@gmail.com",
+        email: '',
         password: 'frogs',
         password_confirmation: 'frogs'
       };
 
       return request(app)
-        .post("/api/v1/users")
+        .post('/api/v1/users')
         .send(service)
         .then(response => {
-          expect(response.status).toBe(201)
-          expect(Object.keys(response.body).length).toBe(1)
-          expect(Object.keys(response.body)).toContain('api_key')
-          expect(response.body.api_key.length).toBe(32)
+          expect(response.status).toBe(400)
+          expect(Object.keys(response.body).length).toBe(3)
+          expect(Object.keys(response.body)).toContain('error')
+          expect(Object.keys(response.body)).toContain('status')
+          expect(Object.keys(response.body)).toContain('message')
+          expect(response.body.error).toBe('EmailCannotBeEmpty')
+          expect(response.body.status).toBe(400)
+          expect(response.body.message).toBe('Email cannot be empty.')
       })
     });
   });

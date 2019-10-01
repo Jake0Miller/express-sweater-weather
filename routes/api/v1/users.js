@@ -9,6 +9,15 @@ router.post('/', function(req, res, next) {
   bcrypt.hash(req.body.password, 10, function(err, hash) {
     res.setHeader("Content-Type", "application/json");
 
+    if (req.body.email == '') {
+      payload = {
+        error: 'EmailCannotBeEmpty',
+        status: 400,
+        message: 'Email cannot be empty.'
+      }
+      res.status(400).send(JSON.stringify(payload));
+    }
+
     User.create({
       email: req.body.email,
       password: hash,
@@ -16,7 +25,7 @@ router.post('/', function(req, res, next) {
     })
 
     .then(user => {
-      payload = {"api_key": user.api_key};
+      payload = {api_key: user.api_key};
       res.status(201).send(JSON.stringify(payload));
     })
 

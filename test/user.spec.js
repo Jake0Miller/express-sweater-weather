@@ -6,6 +6,7 @@ describe('api', () => {
   beforeAll(() => {
     shell.exec('npx sequelize db:create')
     shell.exec('npx sequelize db:migrate')
+    shell.exec('npx sequelize db:seed:all')
   });
   // beforeEach(() => {
   //   shell.exec('npx sequelize db:migrate')
@@ -28,6 +29,24 @@ describe('api', () => {
         .send(service)
         .then(response => {
           expect(response.status).toBe(201)
+          expect(Object.keys(response.body).length).toBe(1)
+          expect(Object.keys(response.body)).toContain('api_key')
+          expect(response.body.api_key.length).toBe(32)
+      })
+    });
+
+    test('email must be unique', () => {
+      var service = {
+        email: 'jake@yahoo.com',
+        password: 'frogs',
+        passwordConfirmation: 'frogs'
+      };
+
+      return request(app)
+        .post('/api/v1/users')
+        .send(service)
+        .then(response => {
+          expect(response.status).toBe(500)
           expect(Object.keys(response.body).length).toBe(1)
           expect(Object.keys(response.body)).toContain('api_key')
           expect(response.body.api_key.length).toBe(32)

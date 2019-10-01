@@ -20,7 +20,7 @@ describe('api', () => {
       var service = {
         email: 'jake@gmail.com',
         password: 'frogs',
-        password_confirmation: 'frogs'
+        passwordConfirmation: 'frogs'
       };
 
       return request(app)
@@ -38,7 +38,7 @@ describe('api', () => {
       var service = {
         email: '',
         password: 'frogs',
-        password_confirmation: 'frogs'
+        passwordConfirmation: 'frogs'
       };
 
       return request(app)
@@ -60,7 +60,7 @@ describe('api', () => {
       var service = {
         email: 'jake@gmail.com',
         password: '',
-        password_confirmation: 'frogs'
+        passwordConfirmation: 'frogs'
       };
 
       return request(app)
@@ -75,6 +75,28 @@ describe('api', () => {
           expect(response.body.error).toBe('PasswordCannotBeEmpty')
           expect(response.body.status).toBe(400)
           expect(response.body.message).toBe('Password cannot be empty.')
+      })
+    });
+
+    test('should not work without password confirmation', () => {
+      var service = {
+        email: 'jake@gmail.com',
+        password: 'frogs',
+        passwordConfirmation: ''
+      };
+
+      return request(app)
+        .post('/api/v1/users')
+        .send(service)
+        .then(response => {
+          expect(response.status).toBe(400)
+          expect(Object.keys(response.body).length).toBe(3)
+          expect(Object.keys(response.body)).toContain('error')
+          expect(Object.keys(response.body)).toContain('status')
+          expect(Object.keys(response.body)).toContain('message')
+          expect(response.body.error).toBe('PasswordConfirmationCannotBeEmpty')
+          expect(response.body.status).toBe(400)
+          expect(response.body.message).toBe('Password confirmation cannot be empty.')
       })
     });
   });

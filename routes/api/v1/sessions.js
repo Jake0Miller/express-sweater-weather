@@ -33,7 +33,7 @@ router.post('/', function(req, res, next) {
     if (user) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         status = 201;
-        payload = { api_key: user.api_key }
+        payload = { api_key: user.apiKey }
       } else {
         status = 401
         payload = { error: 'EmailOrPasswordIncorrect',

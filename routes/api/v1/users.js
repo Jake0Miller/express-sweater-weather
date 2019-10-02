@@ -34,10 +34,10 @@ router.post('/', function(req, res, next) {
   bcrypt.hash(req.body.password, 10, function(err, hash) {
     User.create({ email: req.body.email,
                   password: hash,
-                  api_key: srs() })
+                  apiKey: srs() })
 
     .then(user => {
-      payload = {api_key: user.api_key};
+      payload = {api_key: user.apiKey};
       res.status(201).send(JSON.stringify(payload));
     })
 

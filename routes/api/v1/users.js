@@ -39,6 +39,25 @@ router.post('/', function(req, res, next) {
       res.status(400).send(JSON.stringify(payload));
     }
 
+    // User.findOne({
+    //   where: {email: req.body.email}
+    // })
+    //
+    // .then(users => {
+    //   if (users.length > 0) {
+    //     payload = {
+    //       error: 'EmailAlreadyTaken',
+    //       status: 400,
+    //       message: 'Email has already been taken.'
+    //     }
+    //     res.status(400).send(JSON.stringify(payload));
+    //   }
+    // })
+    //
+    // .catch(error => {
+    //   res.status(500).send({ error });
+    // });
+
     User.create({
       email: req.body.email,
       password: hash,

@@ -2,7 +2,7 @@
   "development": {
     "username": "jmiller",
     "password": null,
-    "database": "sweather_weather_development",
+    "database": "sweater_weather_2_development",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false
@@ -10,7 +10,7 @@
   "test": {
     "username": "jmiller",
     "password": null,
-    "database": "sweather_weather_test",
+    "database": "sweater_weather_2_test",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false
@@ -18,7 +18,7 @@
   "production": {
     "username": "jmiller",
     "password": null,
-    "database": "sweather_weather_production",
+    "database": "sweater_weather_2_production",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false

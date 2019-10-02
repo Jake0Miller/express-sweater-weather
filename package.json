@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "jest --watch"
+    "test": "jest --config ./jest.config.js --forceExit --coverage --detectOpenHandles"
   },
   "dependencies": {
     "braces": ">=2.3.1",
@@ -27,5 +27,10 @@
     "babel-jest": "^25.0.0",
     "shelljs": "^0.8.3",
     "supertest": "^4.0.2"
+  },
+  "jest": {
+    "forceCoverageMatch": [
+      "**/*.test.js"
+    ]
   }
 }

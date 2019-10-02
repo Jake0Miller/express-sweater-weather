@@ -7,12 +7,12 @@ var sequelize = new Sequelize('db', 'username', 'postgres', {dialect: 'postgres'
 describe('api', () => {
   beforeAll(() => {
     sequelize.close()
-    shell.exec('npx sequelize db:create')
-    shell.exec('npx sequelize db:migrate')
-    shell.exec('npx sequelize db:seed:all')
+    shell.exec('npx sequelize db:create --env test')
+    shell.exec('npx sequelize db:migrate --env test')
+    shell.exec('npx sequelize db:seed:all --env test')
   });
   afterAll(() => {
-    shell.exec('npx sequelize db:migrate:undo:all')
+    shell.exec('npx sequelize db:migrate:undo:all --env test')
     sequelize.close();
   });
 

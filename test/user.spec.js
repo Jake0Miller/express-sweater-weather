@@ -18,11 +18,9 @@ describe('api', () => {
 
   describe('Test POST /api/v1/users path', () => {
     test('should return an api key', () => {
-      var service = {
-        email: 'jake@gmail.com',
-        password: 'frogs',
-        passwordConfirmation: 'frogs'
-      };
+      var service = { email: 'jake@gmail.com',
+                      password: 'frogs',
+                      passwordConfirmation: 'frogs' };
 
       return request(app)
         .post('/api/v1/users')
@@ -36,11 +34,9 @@ describe('api', () => {
     });
 
     test('email must be unique', () => {
-      var service = {
-       email: 'jake@yahoo.com',
-       password: 'frogs',
-       passwordConfirmation: 'frogs'
-      };
+      var service = { email: 'jake@yahoo.com',
+                      password: 'frogs',
+                      passwordConfirmation: 'frogs' };
 
       return request(app)
        .post('/api/v1/users')
@@ -58,11 +54,9 @@ describe('api', () => {
     });
 
     test('should not work without email', () => {
-      var service = {
-        email: '',
-        password: 'frogs',
-        passwordConfirmation: 'frogs'
-      };
+      var service = { email: '',
+                      password: 'frogs',
+                      passwordConfirmation: 'frogs' };
 
       return request(app)
         .post('/api/v1/users')
@@ -80,11 +74,9 @@ describe('api', () => {
     });
 
     test('should not work without password', () => {
-      var service = {
-        email: 'jake@gmail.com',
-        password: '',
-        passwordConfirmation: 'frogs'
-      };
+      var service = { email: 'jake@gmail.com',
+                      password: '',
+                      passwordConfirmation: 'frogs' };
 
       return request(app)
         .post('/api/v1/users')
@@ -102,11 +94,9 @@ describe('api', () => {
     });
 
     test('should not work without password confirmation', () => {
-      var service = {
-        email: 'jake@gmail.com',
-        password: 'frogs',
-        passwordConfirmation: ''
-      };
+      var service = { email: 'jake@gmail.com',
+                      password: 'frogs',
+                      passwordConfirmation: '' };
 
       return request(app)
         .post('/api/v1/users')
@@ -124,11 +114,9 @@ describe('api', () => {
     });
 
     test('passwords must match', () => {
-      var service = {
-        email: 'jake@gmail.com',
-        password: 'frogs',
-        passwordConfirmation: 'frog'
-      };
+      var service = { email: 'jake@gmail.com',
+                      password: 'frogs',
+                      passwordConfirmation: 'frog' };
 
       return request(app)
         .post('/api/v1/users')
@@ -146,5 +134,4 @@ describe('api', () => {
     });
 
   });
-
 });

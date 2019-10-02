@@ -11,13 +11,6 @@ describe('api', () => {
     shell.exec('npx sequelize db:migrate')
     shell.exec('npx sequelize db:seed:all')
   });
-  // beforeEach(() => {
-  //   shell.exec('npx sequelize db:migrate')
-  //   shell.exec('npx sequelize db:seed:all')
-  // });
-  // afterEach(() => {
-  //   shell.exec('npx sequelize db:migrate:undo:all')
-  // });
   afterAll(() => {
     shell.exec('npx sequelize db:migrate:undo:all')
     sequelize.close();

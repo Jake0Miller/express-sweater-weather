@@ -16,14 +16,13 @@ describe('api', () => {
     sequelize.close();
   });
 
-  describe('Test POST /api/v1/users path', () => {
+  describe('Test POST /api/v1/sessions path', () => {
     test('should return an api key', () => {
-      var service = { email: 'jake@gmail.com',
-                      password: 'frogs',
-                      passwordConfirmation: 'frogs' };
+      var service = { email: 'jake@yahoo.com',
+                      password: 'test' };
 
       return request(app)
-        .post('/api/v1/users')
+        .post('/api/v1/sessions')
         .send(service)
         .then(response => {
           expect(response.status).toBe(201)
@@ -33,33 +32,12 @@ describe('api', () => {
       })
     });
 
-    test('email must be unique', () => {
-      var service = { email: 'jake@yahoo.com',
-                      password: 'frogs',
-                      passwordConfirmation: 'frogs' };
-
-      return request(app)
-       .post('/api/v1/users')
-       .send(service)
-       .then(response => {
-         expect(response.status).toBe(400)
-         expect(Object.keys(response.body).length).toBe(3)
-         expect(Object.keys(response.body)).toContain('error')
-         expect(Object.keys(response.body)).toContain('status')
-         expect(Object.keys(response.body)).toContain('message')
-         expect(response.body.error).toBe('EmailAlreadyTaken')
-         expect(response.body.status).toBe(400)
-         expect(response.body.message).toBe('Email has already been taken.')
-      })
-    });
-
     test('should not work without email', () => {
       var service = { email: '',
-                      password: 'frogs',
-                      passwordConfirmation: 'frogs' };
+                      password: 'test', };
 
       return request(app)
-        .post('/api/v1/users')
+        .post('/api/v1/sessions')
         .send(service)
         .then(response => {
           expect(response.status).toBe(400)
@@ -74,12 +52,11 @@ describe('api', () => {
     });
 
     test('should not work without password', () => {
-      var service = { email: 'jake@gmail.com',
-                      password: '',
-                      passwordConfirmation: 'frogs' };
+      var service = { email: 'jake@yahoo.com',
+                      password: '', };
 
       return request(app)
-        .post('/api/v1/users')
+        .post('/api/v1/sessions')
         .send(service)
         .then(response => {
           expect(response.status).toBe(400)
@@ -93,43 +70,41 @@ describe('api', () => {
       })
     });
 
-    test('should not work without password confirmation', () => {
-      var service = { email: 'jake@gmail.com',
-                      password: 'frogs',
-                      passwordConfirmation: '' };
+    test('should not work with bad password', () => {
+      var service = { email: 'jake@yahoo.com',
+                      password: 'frog', };
 
       return request(app)
-        .post('/api/v1/users')
+        .post('/api/v1/sessions')
         .send(service)
         .then(response => {
-          expect(response.status).toBe(400)
+          expect(response.status).toBe(401)
           expect(Object.keys(response.body).length).toBe(3)
           expect(Object.keys(response.body)).toContain('error')
           expect(Object.keys(response.body)).toContain('status')
           expect(Object.keys(response.body)).toContain('message')
-          expect(response.body.error).toBe('PasswordConfirmationCannotBeEmpty')
-          expect(response.body.status).toBe(400)
-          expect(response.body.message).toBe('Password confirmation cannot be empty.')
+          expect(response.body.error).toBe('EmailOrPasswordIncorrect')
+          expect(response.body.status).toBe(401)
+          expect(response.body.message).toBe('Email or password is incorrect.')
       })
     });
 
-    test('passwords must match', () => {
+    test('should not work with bad email', () => {
       var service = { email: 'jake@gmail.com',
-                      password: 'frogs',
-                      passwordConfirmation: 'frog' };
+                      password: 'test', };
 
       return request(app)
-        .post('/api/v1/users')
+        .post('/api/v1/sessions')
         .send(service)
         .then(response => {
-          expect(response.status).toBe(400)
+          expect(response.status).toBe(401)
           expect(Object.keys(response.body).length).toBe(3)
           expect(Object.keys(response.body)).toContain('error')
           expect(Object.keys(response.body)).toContain('status')
           expect(Object.keys(response.body)).toContain('message')
-          expect(response.body.error).toBe('PasswordsMustMatch')
-          expect(response.body.status).toBe(400)
-          expect(response.body.message).toBe('Password and confirmation must match.')
+          expect(response.body.error).toBe('EmailOrPasswordIncorrect')
+          expect(response.body.status).toBe(401)
+          expect(response.body.message).toBe('Email or password is incorrect.')
       })
     });
 

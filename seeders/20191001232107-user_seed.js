@@ -1,11 +1,13 @@
 'use strict';
+const bcrypt = require('bcrypt');
+var srs = require('secure-random-string');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Users', [{
       email: 'jake@yahoo.com',
-      password: 'test',
-      api_key: 'test',
+      password: bcrypt.hashSync('test', 10),
+      api_key: srs(),
       createdAt: new Date(),
       updatedAt: new Date()
     },

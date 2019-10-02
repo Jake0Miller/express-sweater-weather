@@ -26,7 +26,7 @@ describe('api', () => {
         .post('/api/v1/sessions')
         .send(service)
         .then(response => {
-          expect(response.status).toBe(201)
+          expect(response.status).toBe(200)
           expect(Object.keys(response.body).length).toBe(1)
           expect(Object.keys(response.body)).toContain('api_key')
           expect(response.body.api_key.length).toBe(32)

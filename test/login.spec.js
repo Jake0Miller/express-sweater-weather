@@ -12,6 +12,7 @@ describe('api', () => {
     shell.exec('npx sequelize db:seed:all --env test')
   });
   afterAll(() => {
+    // shell.exec('npx sequelize db:drop --env test')
     shell.exec('npx sequelize db:migrate:undo:all --env test')
     sequelize.close();
   });

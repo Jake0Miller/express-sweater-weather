@@ -6,34 +6,11 @@ var srs = require('secure-random-string');
 
 router.post('/', function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
+  var status = 0;
 
-  if (req.body.email == '') {
-    payload = {
-      error: 'EmailCannotBeEmpty',
-      status: 400,
-      message: 'Email cannot be empty.'
-    }
-    res.status(400).send(JSON.stringify(payload));
-  } else if (req.body.password == '') {
-    payload = {
-      error: 'PasswordCannotBeEmpty',
-      status: 400,
-      message: 'Password cannot be empty.'
-    }
-    res.status(400).send(JSON.stringify(payload));
-  } else if (req.body.passwordConfirmation == '') {
-    payload = {
-      error: 'PasswordConfirmationCannotBeEmpty',
-      status: 400,
-      message: 'Password confirmation cannot be empty.'
-    }
-    res.status(400).send(JSON.stringify(payload));
-  } else if (req.body.passwordConfirmation != req.body.password) {
-    payload = {
-      error: 'PasswordsMustMatch',
-      status: 400,
-      message: 'Password and confirmation must match.'
-    }
+  var payload = checkBody(req.body);
+
+  if (payload) {
     res.status(400).send(JSON.stringify(payload));
   }
 
@@ -43,11 +20,9 @@ router.post('/', function(req, res, next) {
 
   .then(user => {
     if (user) {
-      payload = {
-        error: 'EmailAlreadyTaken',
-        status: 400,
-        message: 'Email has already been taken.'
-      }
+      payload = { error: 'EmailAlreadyTaken',
+                  status: 400,
+                  message: 'Email has already been taken.' }
       res.status(400).send(JSON.stringify(payload));
     }
   })
@@ -57,11 +32,9 @@ router.post('/', function(req, res, next) {
   });
 
   bcrypt.hash(req.body.password, 10, function(err, hash) {
-    User.create({
-      email: req.body.email,
-      password: hash,
-      api_key: srs()
-    })
+    User.create({ email: req.body.email,
+                  password: hash,
+                  api_key: srs() })
 
     .then(user => {
       payload = {api_key: user.api_key};
@@ -73,5 +46,29 @@ router.post('/', function(req, res, next) {
     });
   });
 });
+
+function checkBody(body) {
+  var payload;
+
+  if (body.email == '') {
+    payload = { error: 'EmailCannotBeEmpty',
+                status: 400,
+                message: 'Email cannot be empty.' }
+  } else if (body.password == '') {
+    payload = { error: 'PasswordCannotBeEmpty',
+                status: 400,
+                message: 'Password cannot be empty.' }
+  } else if (body.passwordConfirmation == '') {
+    payload = { error: 'PasswordConfirmationCannotBeEmpty',
+                status: 400,
+                message: 'Password confirmation cannot be empty.' }
+  } else if (body.passwordConfirmation != body.password) {
+    payload = { error: 'PasswordsMustMatch',
+                status: 400,
+                message: 'Password and confirmation must match.' }
+  }
+
+  return payload
+}
 
 module.exports = router;

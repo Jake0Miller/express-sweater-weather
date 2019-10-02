@@ -7,7 +7,7 @@
     "test": "jest --watch"
   },
   "dependencies": {
-    "braces": ">=2.3.1"
+    "braces": ">=2.3.1",
     "@babel/core": "^7.6.2",
     "babel-core": "^7.0.0-bridge.0",
     "bcrypt": "^3.0.6",
@@ -24,7 +24,7 @@
     "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
-    "babel-jest": "^22.4.3",
+    "babel-jest": "^25.0.0",
     "shelljs": "^0.8.3",
     "supertest": "^4.0.2"
   }

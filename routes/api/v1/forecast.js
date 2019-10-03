@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../../../models').User;
 
 router.get('/', function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
@@ -10,12 +11,13 @@ router.get('/', function(req, res, next) {
 
   .then(user => {
     if (user) {
-      var apiKey = user.apiKey;
+      res.status(200).send(JSON.stringify(user.apiKey));
     } else {
-      payload = { error: 'EmailOrPasswordIncorrect',
+      payload = { error: 'Unauthorized',
                   status: 401,
-                  message: 'Email or password is incorrect.'};
-      return [401, payload];
+                  message: 'Unauthorized.'};
+      // return [401, payload];
+      res.status(401).send(JSON.stringify(payload));
     }
   })
 

@@ -17,21 +17,21 @@ describe('api', () => {
   });
 
   describe('Test GET /api/v1/forecast path', () => {
-    test('should return an api key', () => {
-      var user = User.findOne({where: {email: 'jake@yahoo.com'}})
+    test('should return an api key', async () => {
+      let user = await User.findOne({where: {email: 'jake@yahoo.com'}})
 
       service = { api_key: user.apiKey };
 
       return request(app)
-        .get('/api/v1/forecast/')
-        .send(service)
-        .then(response => {
-          expect(response.status).toBe(200)
-          expect(Object.keys(response.body).length).toBe(4)
-          expect(Object.keys(response.body)).toContain('location')
-          expect(Object.keys(response.body)).toContain('currently')
-          expect(Object.keys(response.body)).toContain('hourly')
-          expect(Object.keys(response.body)).toContain('daily')
+      .get('/api/v1/forecast')
+      .send(service)
+      .then(response => {
+        expect(response.status).toBe(200)
+        expect(Object.keys(response.body).length).toBe(4)
+        expect(Object.keys(response.body)).toContain('location')
+        expect(Object.keys(response.body)).toContain('currently')
+        expect(Object.keys(response.body)).toContain('hourly')
+        expect(Object.keys(response.body)).toContain('daily')
       })
     });
 

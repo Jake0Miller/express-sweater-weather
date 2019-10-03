@@ -4,15 +4,18 @@ var User = require('../../../models').User;
 
 router.get('/', function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
-
+  console.log('Step 1')
   User.findOne({
     where: { apiKey: req.body.api_key }
   })
 
   .then(user => {
+    console.log('Step 2')
     if (user) {
+      console.log('Step 3')
       res.status(200).send(JSON.stringify(user.apiKey));
     } else {
+      console.log('Step 4')
       payload = { error: 'Unauthorized',
                   status: 401,
                   message: 'Unauthorized.'};

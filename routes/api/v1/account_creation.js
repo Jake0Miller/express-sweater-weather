@@ -1,3 +1,7 @@
+var User = require('../../../models').User;
+const bcrypt = require('bcrypt');
+var srs = require('secure-random-string');
+
 function checkBody(body) {
   var payload;
   if (body.email == null || body.email == '') {

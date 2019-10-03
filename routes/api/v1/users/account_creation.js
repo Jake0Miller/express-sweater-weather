@@ -1,4 +1,4 @@
-var User = require('../../../models').User;
+var User = require('../../../../models').User;
 const bcrypt = require('bcrypt');
 var srs = require('secure-random-string');
 
@@ -25,7 +25,6 @@ function checkBody(body) {
 }
 
 function findOrCreateUser(body, callback) {
-  console.log(body);
   User.findOne({ where: {email: body.email} })
   .then(user => {
     if (user) {

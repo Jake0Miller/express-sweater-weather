@@ -3,6 +3,7 @@ var router = express.Router();
 const bcrypt = require('bcrypt');
 var User = require('../../../models').User;
 var checkBody = require("./login").checkBody;
+// var tryLogin = require("./login").tryLogin;
 
 router.post('/', function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
@@ -15,26 +16,8 @@ router.post('/', function(req, res, next) {
     })
 
     .then(user => {
-      let payload;
-      let status;
-
-      if (user) {
-        if (bcrypt.compareSync(req.body.password, user.password)) {
-          status = 200;
-          payload = { api_key: user.apiKey }
-        } else {
-          status = 401
-          payload = { error: 'EmailOrPasswordIncorrect',
-          status: 401,
-          message: 'Email or password is incorrect.'}
-        };
-      } else {
-        status = 401
-        payload = { error: 'EmailOrPasswordIncorrect',
-        status: 401,
-        message: 'Email or password is incorrect.'}
-      }
-      res.status(status).send(JSON.stringify(payload));
+      response = tryLogin(user, req.body)
+      res.status(response[0]).send(JSON.stringify(response[1]));
     })
 
     .catch(error => {
@@ -42,5 +25,25 @@ router.post('/', function(req, res, next) {
     });
   }
 });
+
+function tryLogin(user, body) {
+  var payload;
+  if (user) {
+    if (bcrypt.compareSync(body.password, user.password)) {
+      payload = { api_key: user.apiKey };
+      return [200, payload];
+    } else {
+      payload = { error: 'EmailOrPasswordIncorrect',
+                  status: 401,
+                  message: 'Email or password is incorrect.'};
+      return [401, payload];
+    };
+  } else {
+    payload = { error: 'EmailOrPasswordIncorrect',
+                status: 401,
+                message: 'Email or password is incorrect.'};
+    return [401, payload];
+  }
+}
 
 module.exports = router;

@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 var User = require('../../../models').User;
 var srs = require('secure-random-string');
 var checkBody = require("./account_creation").checkBody;
-// var focu = require("./account_creation").focu;
 // var findOrCreateUser = require("./account_creation").findOrCreateUser;
 
 router.post('/', function(req, res, next) {
@@ -13,7 +12,6 @@ router.post('/', function(req, res, next) {
   if (payload) {
     res.status(400).send(JSON.stringify(payload));
   } else {
-    // focu(req.body);
     findOrCreateUser(req.body, function(response) {
       res.status(response[0]).send(JSON.stringify(response[1]));
     });

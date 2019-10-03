@@ -12,4 +12,25 @@ function checkBody(body) {
   return payload
 }
 
-module.exports = {checkBody: checkBody}
+function tryLogin(user, body) {
+  var payload;
+  if (user) {
+    if (bcrypt.compareSync(body.password, user.password)) {
+      payload = { api_key: user.apiKey };
+      return [200, payload];
+    } else {
+      payload = { error: 'EmailOrPasswordIncorrect',
+                  status: 401,
+                  message: 'Email or password is incorrect.'};
+      return [401, payload];
+    };
+  } else {
+    payload = { error: 'EmailOrPasswordIncorrect',
+                status: 401,
+                message: 'Email or password is incorrect.'};
+    return [401, payload];
+  }
+}
+
+module.exports = {checkBody: checkBody,
+                  tryLogin: tryLogin}

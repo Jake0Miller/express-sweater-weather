@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -7,7 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/api/v1/users/users');
 var sessionsRouter = require('./routes/api/v1/login/sessions');
-var forecastRouter = require('./routes/api/v1/forecast');
+var forecastRouter = require('./routes/api/v1/forecast/forecast');
 
 var app = express();
 

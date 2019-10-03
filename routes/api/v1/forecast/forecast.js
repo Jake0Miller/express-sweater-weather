@@ -1,5 +1,5 @@
 var router = require('express').Router();
-var User = require('../../../models').User;
+var User = require('../../../../models').User;
 
 router.get('/', function(req, res, next) {
   res.setHeader("Content-Type", "application/json");

@@ -16,10 +16,7 @@ function checkBody(body) {
 }
 
 function tryLogin(body, callback) {
-  User.findOne({
-    where: { email: body.email }
-  })
-
+  User.findOne({ where: { email: body.email } })
   .then(user => {
     if (user) {
       if (bcrypt.compareSync(body.password, user.password)) {
@@ -37,7 +34,6 @@ function tryLogin(body, callback) {
       return callback([401, payload]);
     }
   })
-
   .catch(error => { return callback([500, error]); });
 }
 

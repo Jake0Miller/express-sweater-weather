@@ -24,17 +24,6 @@ function checkBody(body) {
   return payload
 }
 
-function sayBye() {
-  console.log("Ciao")
-}
-
-function focu(body) {
-  findOrCreateUser(body, function(response) {
-    console.log(response);
-    res.status(response[0]).send(JSON.stringify(response[1]));
-  });
-}
-
 function findOrCreateUser(body, callback) {
   console.log(body);
   User.findOne({ where: {email: body.email} })
@@ -58,5 +47,4 @@ function findOrCreateUser(body, callback) {
 }
 
 module.exports = {checkBody: checkBody,
-                  focu: focu,
                   findOrCreateUser: findOrCreateUser}

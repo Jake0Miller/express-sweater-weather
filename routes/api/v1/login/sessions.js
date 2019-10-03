@@ -1,5 +1,4 @@
-var express = require('express');
-var router = express.Router();
+var router = require('express').Router();
 const bcrypt = require('bcrypt');
 var User = require('../../../../models').User;
 var checkBody = require("./login").checkBody;

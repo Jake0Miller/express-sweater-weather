@@ -1,5 +1,4 @@
-var express = require('express');
-var router = express.Router();
+var router = require('express').Router();
 var User = require('../../../../models').User;
 const bcrypt = require('bcrypt');
 var srs = require('secure-random-string');

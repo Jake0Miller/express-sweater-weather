@@ -6,8 +6,7 @@ const sequelize = new Sequelize('db', 'username', 'postgres', {dialect: 'postgre
 const User = require('../models').User;
 // const mockLocation = require("../__mocks__/location")
 // const locationResponse = require("../__fixtures__/location.json");
-
-jest.mock('../../util/apiCalls')
+// jest.mock('../../util/apiCalls')
 
 describe('api', () => {
   beforeAll(() => {
@@ -22,7 +21,7 @@ describe('api', () => {
 
   describe('Test GET /api/v1/forecast path', () => {
     test('should return a forecast', async () => {
-      mockLocation.get.mockImplementationOnce(() => Promise.resolve(response))
+      // mockLocation.get.mockImplementationOnce(() => Promise.resolve(response))
       let user = await User.findOne({where: {email: 'jake@yahoo.com'}})
 
       service = { api_key: user.apiKey };

@@ -4,8 +4,10 @@ const app = require('../app');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('db', 'username', 'postgres', {dialect: 'postgres'});
 const User = require('../models').User;
-const mockLocation = require("../__mocks__/location")
-const locationResponse = require("../__fixtures__/location.json");
+// const mockLocation = require("../__mocks__/location")
+// const locationResponse = require("../__fixtures__/location.json");
+
+jest.mock('../../util/apiCalls')
 
 describe('api', () => {
   beforeAll(() => {

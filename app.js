@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/api/v1/users/users');
 var sessionsRouter = require('./routes/api/v1/login/sessions');
 var forecastRouter = require('./routes/api/v1/forecast/forecast');
+var favoritesRouter = require('./routes/api/v1/favorites/favorites');
 
 var app = express();
 
@@ -21,5 +22,6 @@ app.use('/', indexRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/sessions', sessionsRouter);
 app.use('/api/v1/forecast', forecastRouter);
+app.use('/api/v1/favorites', favoritesRouter);
 
 module.exports = app;

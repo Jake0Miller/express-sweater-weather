@@ -9,35 +9,38 @@ router.get('/', function(req, res, next) {
   User.findOne({ where: { apiKey: req.body.api_key } })
 
   .then(user => {
+
     if (user) {
-      console.log('Step 1')
       Location.findOne({ where: { location: req.query.location } })
 
       .then(location => {
         var coords;
 
         if (location) {
-          console.log('Step 2a')
+
           coords = location
           return coords
+
         } else {
-          console.log('Step 2b')
+
           return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.location}&key=${process.env.GEO_KEY}`)
           .then(response => response.json())
           .then(result => {
             coords = { location: req.query.location,
                        lat: result['results'][0]['geometry']['location']['lat'],
                        lng: result['results'][0]['geometry']['location']['lng'] }
+            Location.create(coords)
             return coords
           })
+
         }
+
       })
-      .then(coords => {
-        console.log('Step 3')
-        console.log(coords)
-        return fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY}/${coords['lat']},${coords['lng']}`)
-      })
+
+      .then(coords => fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY}/${coords['lat']},${coords['lng']}`))
+
       .then(response => response.json())
+
       .then(forecast => {
         let loc = req.query.location.split(",");
         let city = loc[0]
@@ -75,7 +78,7 @@ router.get('/', function(req, res, next) {
 
         res.status(200).send(JSON.stringify(payload))
       })
-    .catch(error => res.status(501).send({ error }) )
+    .catch(error => res.status(500).send({ error }) )
 
     } else {
       let payload = { error: 'Unauthorized',
@@ -83,6 +86,7 @@ router.get('/', function(req, res, next) {
                       message: 'Unauthorized.'};
       res.status(401).send(payload);
     }
+
   })
 
   .catch(error => res.status(500).send({ error }) )

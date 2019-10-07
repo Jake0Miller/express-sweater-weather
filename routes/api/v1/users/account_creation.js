@@ -12,11 +12,11 @@ function checkBody(body) {
     payload = { error: 'PasswordCannotBeEmpty',
                 status: 400,
                 message: 'Password cannot be empty.' }
-  } else if (body.passwordConfirmation == null || body.passwordConfirmation == '') {
+  } else if (body.password_confirmation == null || body.password_confirmation == '') {
     payload = { error: 'PasswordConfirmationCannotBeEmpty',
                 status: 400,
                 message: 'Password confirmation cannot be empty.' }
-  } else if (body.passwordConfirmation != body.password) {
+  } else if (body.password_confirmation != body.password) {
     payload = { error: 'PasswordsMustMatch',
                 status: 400,
                 message: 'Password and confirmation must match.' }

@@ -5,7 +5,9 @@ module.exports = {
     return queryInterface.bulkInsert('Locations', [{
       location: 'denver,co',
       lat: '39.7392358',
-      lng: '-104.990251'
+      lng: '-104.990251',
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     ], {});
   },

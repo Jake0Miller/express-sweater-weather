@@ -71,10 +71,10 @@ router.get('/', function(req, res, next) {
             cloudCover,
             visibility }))(forecast['currently']);
 
-        payload = { location: `${city}, ${state}`,
-        currently: currently,
-        hourly: forecast['hourly'],
-        daily: forecast['daily'] }
+        let payload = { location: `${city}, ${state}`,
+                        currently: currently,
+                        hourly: forecast['hourly'],
+                        daily: forecast['daily'] }
 
         res.status(200).send(JSON.stringify(payload))
       })
@@ -83,7 +83,7 @@ router.get('/', function(req, res, next) {
     } else {
       let payload = { error: 'Unauthorized',
                       status: 401,
-                      message: 'Unauthorized.'};
+                      message: 'Unauthorized.' };
       res.status(401).send(payload);
     }
 

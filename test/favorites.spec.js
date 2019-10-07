@@ -37,7 +37,7 @@ describe('api', () => {
     test('should list favorite locations', async () => {
       let user = await User.findOne({where: {email: 'jake@yahoo.com'}})
       let denver = await Location.findOne({where: {location: 'denver,co'}})
-      let fav = await FavoriteLocation.create({user_id: user.id, location_id: location.id})
+      let fav = await FavoriteLocation.create({user_id: user.id, location_id: denver.id})
 
       service = {api_key: user.apiKey};
 
@@ -46,8 +46,11 @@ describe('api', () => {
       .send(service)
       .then(response => {
         expect(response.status).toBe(200)
-        expect(Object.keys(response.body).length).toBe(1)
-        expect(response.body[0].length).toBe(2)
+        expect(Object.keys(response.body).length).toBe(2)
+        expect(Object.keys(response.body[0]).length).toBe(2)
+        expect(Object.keys(response.body[0]).length).toBe(2)
+        expect(Object.keys(response.body[0])).toContain('location')
+        expect(Object.keys(response.body[0])).toContain('current_weather')
       })
     });
 

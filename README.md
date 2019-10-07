@@ -18,6 +18,10 @@ Jacob Miller
 
 jake0miller@gmail.com
 
+# Deployed Location
+
+https://intense-hamlet-80398.herokuapp.com/
+
 # Tech stack
 
 Express 4.16.1

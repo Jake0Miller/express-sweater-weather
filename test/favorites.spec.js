@@ -54,5 +54,32 @@ describe('api', () => {
       })
     });
 
+    test('should delete a favorite location', async () => {
+      let user = await User.findOne({where: {email: 'jake@yahoo.com'}})
+      let denver = await Location.findOne({where: {location: 'denver,co'}})
+      let fav = await FavoriteLocation.create({user_id: user.id, location_id: denver.id})
+
+      service = {location: 'denver,co', api_key: user.apiKey};
+
+      return request(app)
+      .delete('/api/v1/favorites')
+      .send(service)
+      .then(response => {
+        expect(response.status).toBe(204)
+      })
+
+      return request(app)
+      .get('/api/v1/favorites')
+      .send(service)
+      .then(response => {
+        expect(response.status).toBe(200)
+        expect(Object.keys(response.body).length).toBe(1)
+        expect(Object.keys(response.body[0]).length).toBe(2)
+        expect(Object.keys(response.body[0]).length).toBe(2)
+        expect(Object.keys(response.body[0])).toContain('location')
+        expect(Object.keys(response.body[0])).toContain('current_weather')
+      })
+    });
+
   });
 });

@@ -4,7 +4,7 @@ var Location = require('../../../../models').Location;
 var FavoriteLocation = require('../../../../models').FavoriteLocation;
 const fetch = require('node-fetch');
 
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
 
   User.findOne({ where: { apiKey: req.body.api_key } })

@@ -19,7 +19,7 @@ describe('api', () => {
     test('should return an api key', () => {
       var service = { email: 'jake@gmail.com',
                       password: 'frogs',
-                      passwordConfirmation: 'frogs' };
+                      password_confirmation: 'frogs' };
 
       return request(app)
         .post('/api/v1/users')

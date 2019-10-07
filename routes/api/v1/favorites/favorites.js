@@ -154,4 +154,53 @@ router.get('/', function(req, res, next) {
   .catch(error => res.status(500).send({ error }) )
 });
 
+router.delete('/', function(req, res, next) {
+  res.setHeader("Content-Type", "application/json");
+
+  User.findOne({ where: { apiKey: req.body.api_key } })
+
+  .then(user => {
+
+    if (user) {
+
+      FavoriteLocation.findAll({where: {user_id: user.id}})
+
+      .then(favs => {
+
+        if (favs) {
+
+          let locs = [];
+
+          favs.forEach(fav => {
+            locs.push(fav.location_id);
+          });
+          
+          Location.destroy({where: {id: locs, location: req.body.location}})
+
+          .then(payload => res.status(204).send())
+
+        } else {
+
+          res.status(200).send('User has no favorites.')
+
+        }
+
+      })
+
+      .catch(error => res.status(500).send({ error }) )
+
+    } else {
+
+      let payload = { error: 'Unauthorized',
+                      status: 401,
+                      message: 'Unauthorized.'};
+      res.status(401).send(payload);
+
+    }
+
+  })
+
+  .catch(error => res.status(500).send({ error }) )
+});
+
 module.exports = router;

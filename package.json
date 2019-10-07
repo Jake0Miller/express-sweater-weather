@@ -10,7 +10,7 @@
     "@babel/core": "^7.6.2",
     "babel-core": "^7.0.0-bridge.0",
     "bcrypt": "^3.0.6",
-    "bl": ">=0.9.5",
+    "bl": ">=1.0.1",
     "braces": ">=2.3.1",
     "cookie-parser": "~1.4.4",
     "core-util-is": "^1.0.2",
@@ -30,6 +30,9 @@
     "babel-jest": "^25.0.0",
     "shelljs": "^0.8.3",
     "supertest": "^4.0.2"
+  },
+  "engines": {
+    "node": "10.x"
   },
   "jest": {
     "forceCoverageMatch": [

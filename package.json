@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/core": "^7.6.2",
     "babel-core": "^7.0.0-bridge.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bl": ">=1.0.1",
     "braces": ">=2.3.1",
     "cookie-parser": "~1.4.4",
